@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fcfafb;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-soft: #f9f2f5;
+      --text: #241922;
+      --muted: #746672;
+      --line: rgba(229, 216, 224, 0.85);
+      --accent: #c56b8a;
+      --accent-dark: #9b4f69;
+      --accent-soft: #f6dce7;
+      --rose: #f2a7c2;
+      --pink: #ff8ec2;
+      --lavender: #cda7ff;
+      --peach: #ffc7b2;
+      --shadow: 0 18px 50px rgba(48, 26, 38, 0.10);
+      --radius: 24px;
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 214, 230, 0.7), transparent 28%),
+        radial-gradient(circle at top right, rgba(221, 198, 255, 0.45), transparent 26%),
+        linear-gradient(180deg, #fffdfd 0%, #fcfafb 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .falling-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .fall {
+      position: absolute;
+      top: -12vh;
+      opacity: 0.9;
+      will-change: transform, opacity;
+      animation-name: fallDown;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      filter: blur(0.2px);
+      user-select: none;
+    }
+
+    .fall.petal {
+      color: rgba(244, 158, 191, 0.82);
+      text-shadow: 0 0 12px rgba(255, 179, 210, 0.35);
+    }
+
+    .fall.flower {
+      color: rgba(197, 132, 237, 0.62);
+      text-shadow: 0 0 10px rgba(208, 168, 255, 0.28);
+    }
+
+    .fall.heart {
+      color: rgba(255, 124, 176, 0.72);
+      text-shadow: 0 0 12px rgba(255, 145, 190, 0.32);
+    }
+
+    @keyframes fallDown {
+      0% {
+        transform: translate3d(0, -10vh, 0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.95;
+      }
+      50% {
+        transform: translate3d(18px, 50vh, 0) rotate(120deg);
+      }
+      100% {
+        transform: translate3d(-26px, 115vh, 0) rotate(260deg);
+        opacity: 0.08;
+      }
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(252, 250, 251, 0.72);
+      border-bottom: 1px solid rgba(229, 216, 224, 0.65);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 20px;
+    }
+
+    .brand {
+      font-family: "Pacifico", cursive;
+      font-size: 1.25rem;
+      color: var(--accent-dark);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      padding: 88px 0 52px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .aside-card,
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card {
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top right, rgba(197, 107, 138, 0.12), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(205, 167, 255, 0.10), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,250,252,0.88) 100%);
+    }
+
+    .hero-card::after {
+      content: "❀ ✿ ♡";
+      position: absolute;
+      right: 24px;
+      top: 18px;
+      font-size: 1.1rem;
+      color: rgba(197, 107, 138, 0.24);
+      letter-spacing: 10px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--accent-dark);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero h1,
+    .section-head h2,
+    .poem-pane h3 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #24191f;
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2.8rem, 5vw, 5.1rem);
+      line-height: 0.98;
+    }
+
+    .hero h1 .script {
+      font-family: "Pacifico", cursive;
+      font-size: 0.78em;
+      color: var(--accent);
+      font-weight: 400;
+      margin-left: 6px;
+      white-space: nowrap;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-weight: 700;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent), #d985a0);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 12px 24px rgba(197, 107, 138, 0.22);
+    }
+
+    .button.secondary {
+      background: rgba(255,255,255,0.86);
+      color: var(--text);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(197, 107, 138, 0.14);
+    }
+
+    .aside-card {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(253,247,249,0.9) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .aside-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -60px -60px auto;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(246, 220, 231, 0.7), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .aside-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .aside-quote {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.34rem;
+      line-height: 1.5;
+      color: #2b1d24;
+      margin: 0 0 18px;
+    }
+
+    .aside-foot {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 8px 0 70px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .section-card {
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-card::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -100px;
+      top: -100px;
+      background: radial-gradient(circle, rgba(246, 220, 231, 0.5), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 2.05rem;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 60ch;
+      font-weight: 500;
+    }
+
+    .birthday-text {
+      white-space: pre-line;
+      color: #2b1d24;
+      font-size: 1.04rem;
+      line-height: 1.95;
+      max-width: 76ch;
+    }
+
+    .poems-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .poem-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .poem-tab {
+      width: 100%;
+      text-align: left;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      cursor: pointer;
+      color: var(--text);
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .poem-tab::after {
+      content: "✿";
+      position: absolute;
+      right: 14px;
+      top: 12px;
+      color: rgba(197, 107, 138, 0.18);
+      font-size: 1rem;
+    }
+
+    .poem-tab:hover {
+      transform: translateY(-2px);
+      border-color: #d8c2ca;
+      background: #fffafb;
+      box-shadow: 0 10px 22px rgba(197, 107, 138, 0.08);
+    }
+
+    .poem-tab.active {
+      border-color: var(--accent);
+      background: linear-gradient(180deg, #fff8fa 0%, #fffdfd 100%);
+      box-shadow: inset 0 0 0 1px rgba(183, 110, 121, 0.10);
+    }
+
+    .poem-tab .index {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .poem-tab .title {
+      display: block;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .poem-viewer {
+      min-height: 520px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.93) 0%, rgba(255,252,253,0.9) 100%);
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .poem-pane {
+      display: none;
+      padding: 28px;
+      animation: fadeIn 0.28s ease;
+    }
+
+    .poem-pane.active {
+      display: block;
+    }
+
+    .poem-meta {
+      color: var(--muted);
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .poem-pane h3 {
+      margin: 0 0 16px;
+      font-size: 1.72rem;
+      line-height: 1.2;
+    }
+
+    .poem-body {
+      white-space: pre-line;
+      color: #302328;
+      line-height: 1.95;
+      max-height: 560px;
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .footer {
+      padding: 0 0 40px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .poems-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .poem-viewer {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 56px;
+      }
+
+      .hero-card,
+      .section-card,
+      .aside-card {
+        padding: 22px;
+      }
+
+      .nav {
+        padding: 10px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        gap: 14px;
+      }
+
+      .hero h1 {
+        font-size: 2.7rem;
+      }
+
+      .section-head h2 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="falling-layer" aria-hidden="true">
+    <span class="fall petal" style="left:2%; font-size:18px; animation-duration:12s; animation-delay:-2s;">❀</span>
+    <span class="fall petal" style="left:8%; font-size:16px; animation-duration:16s; animation-delay:-5s;">✿</span>
+    <span class="fall petal" style="left:15%; font-size:20px; animation-duration:14s; animation-delay:-7s;">❁</span>
+    <span class="fall petal" style="left:22%; font-size:15px; animation-duration:18s; animation-delay:-1s;">✾</span>
+    <span class="fall petal" style="left:30%; font-size:18px; animation-duration:13s; animation-delay:-4s;">❀</span>
+    <span class="fall petal" style="left:39%; font-size:17px; animation-duration:19s; animation-delay:-8s;">✿</span>
+    <span class="fall petal" style="left:47%; font-size:21px; animation-duration:15s; animation-delay:-3s;">❁</span>
+    <span class="fall petal" style="left:55%; font-size:16px; animation-duration:17s; animation-delay:-9s;">✾</span>
+    <span class="fall petal" style="left:63%; font-size:19px; animation-duration:12s; animation-delay:-6s;">❀</span>
+    <span class="fall petal" style="left:71%; font-size:15px; animation-duration:16s; animation-delay:-10s;">✿</span>
+    <span class="fall petal" style="left:80%; font-size:20px; animation-duration:14s; animation-delay:-2s;">❁</span>
+    <span class="fall petal" style="left:88%; font-size:17px; animation-duration:18s; animation-delay:-11s;">✾</span>
+    <span class="fall petal" style="left:95%; font-size:19px; animation-duration:13s; animation-delay:-5s;">❀</span>
+
+    <span class="fall heart" style="left:5%; font-size:16px; animation-duration:20s; animation-delay:-8s;">♥</span>
+    <span class="fall heart" style="left:18%; font-size:14px; animation-duration:17s; animation-delay:-2s;">♡</span>
+    <span class="fall heart" style="left:34%; font-size:15px; animation-duration:22s; animation-delay:-12s;">♥</span>
+    <span class="fall heart" style="left:52%; font-size:14px; animation-duration:19s; animation-delay:-5s;">♡</span>
+    <span class="fall heart" style="left:68%; font-size:15px; animation-duration:21s; animation-delay:-9s;">♥</span>
+    <span class="fall heart" style="left:83%; font-size:13px; animation-duration:18s; animation-delay:-3s;">♡</span>
+
+    <span class="fall flower" style="left:12%; font-size:22px; animation-duration:24s; animation-delay:-7s;">✿</span>
+    <span class="fall flower" style="left:27%; font-size:20px; animation-duration:20s; animation-delay:-4s;">❀</span>
+    <span class="fall flower" style="left:44%; font-size:18px; animation-duration:23s; animation-delay:-9s;">✾</span>
+    <span class="fall flower" style="left:61%; font-size:21px; animation-duration:19s; animation-delay:-6s;">❁</span>
+    <span class="fall flower" style="left:76%; font-size:19px; animation-duration:22s; animation-delay:-11s;">✿</span>
+    <span class="fall flower" style="left:91%; font-size:20px; animation-duration:25s; animation-delay:-8s;">❀</span>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#home" class="brand">for pookie</a>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#birthday-wish">Birthday Wish</a>
+        <a href="#poems">Poems</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="home">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">For my pookie</div>
+          <h1>Happy Birthday<span class="script">, pookie</span></h1>
+          <p>
+            A simple, thoughtful space for your birthday — with one wish set apart,
+            and the poems kept here like pages worth returning to.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#birthday-wish">Read birthday wish</a>
+            <a class="button secondary" href="#poems">Open poems</a>
+          </div>
+        </div>
+
+        <aside class="aside-card">
+          <div>
+            <div class="aside-label">Featured line</div>
+            <p class="aside-quote">
+              “I’ll be here, missing you in every language dictionaries haven’t invented yet.”
+            </p>
+          </div>
+          <div class="aside-foot">
+            With warmth, for your day.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="content">
+      <section class="section-card" id="birthday-wish">
+        <div class="section-head">
+          <h2>Birthday Wish</h2>
+        </div>
+
+        <div class="birthday-text">
+I hope today is soft with you.
+
+I still have your hug on layaway, charging interest in my chest. somewhere between a firm bite and hands that knew where they belonged, I misplaced the version of me that knew how to just say happy birthday without meaning so much more.
+
+So take the more. Take the forehead kiss I didn’t ask permission for, the circles my fingers traced when we were quiet, the space behind your ear that I decided was mine for one tipsy evening.
+
+Make the most of today, pookie. Eat something good. Laugh too loud. Let the world hold you the way I’m still figuring out how to.
+        </div>
+      </section>
+
+      <section class="section-card" id="poems">
+        <div class="section-head">
+          <h2>Poems</h2>
+          <p>Select a title to view each piece.</p>
+        </div>
+
+        <div class="poems-layout">
+          <div class="poem-list">
+            <button class="poem-tab active" data-poem="poem1">
+              <span class="index">Poem 01</span>
+              <span class="title">A firm bite now and a little bruise for later</span>
+            </button>
+
+            <button class="poem-tab" data-poem="poem2">
+              <span class="index">Poem 02</span>
+              <span class="title">I drank too much or too little</span>
+            </button>
+
+            <button class="poem-tab" data-poem="poem3">
+              <span class="index">Poem 03</span>
+              <span class="title">how much longer without your hug</span>
+            </button>
+
+            <button class="poem-tab" data-poem="poem4">
+              <span class="index">Poem 04</span>
+              <span class="title">Some moments are written in water</span>
+            </button>
+
+            <button class="poem-tab" data-poem="poem5">
+              <span class="index">Poem 05</span>
+              <span class="title">With the infinity of our mortality</span>
+            </button>
+          </div>
+
+          <div class="poem-viewer">
+            <article class="poem-pane active" id="poem1">
+              <div class="poem-meta">Poem 01</div>
+              <h3>A firm bite now and a little bruise for later</h3>
+              <div class="poem-body">A firm bite now and a little bruise for later</div>
+            </article>
+
+            <article class="poem-pane" id="poem2">
+              <div class="poem-meta">Poem 02</div>
+              <h3>I drank too much or too little</h3>
+              <div class="poem-body">
+I drank too much or too little. The line blurs when there’s a narrow corridor between what I feel and what I allow myself to say.
+
+You asked me once if the alcohol gave me confidence, your eyes didn’t search mine for answers and it felt just like another question that didn’t have much in it. I told you no, and I meant it. But here’s the truth, the proof you never asked for, it doesn’t give me courage. It doesn’t unlock some hidden version of myself who knows how to love you correctly. It just shifts something, It just blurs the border my sober mind carefully draws between want and shouldn’t, between reaching for you and keeping my hands to myself.
+
+My sober brain builds walls with good intentions. It tells me not to do too much, not to ask the questions that live like shadows in my throat. But today, tonight, tipsy and unguarded, those walls feel transparent. I can see through them to where you are, and god, I so much want you.
+
+Due to personal reasons, I have decided to kiss your forehead. Yeah, I’m a bit tipsy, and I skipped asking permission from the reasonable part of myself. My heart is telling my brain to touch you and touch is where my control lives
+not in force but in intention. In knowing exactly where my hands belong. In the simplicity of contact, In the precise pressure of my palm against your palm, the way my fingers traces circles when we’re quiet, the moment my hand finds your neck and you lean into it, the space behind your ear where I could rest my lips and make you forget the world ever asked anything else of you.
+
+I’ve been selling free pieces of my naked heart on the poetry I write you, pretending it’s art and not confession.
+
+I tell myself a single kiss could fix so much, A wild kiss would fix so much.
+
+I need you to know how I would kiss you.
+eye contact and all the desire in it, so deep i could see the self-control leave your eyes like a breath. I’d tell you to close your eyes first, then kiss every inch of your perfect face, your cheekbones, the corner of your mouth where your smile begins. I do not want to bother you, but I do need another kiss. And another. And another.
+
+I want my tongue to speak languages across your body that dictionaries haven’t invented yet and I’d stitch sweet moments into every kiss and maybe you’d feel them tomorrow, maybe the memories would kiss you back when I’m not there to do it myself.
+
+I have said too much to my drunk self again but there are truths that only arrive when your guard is tired 
+you should know, don’t you know?
+
+i met you sometime and we said some things and we connected in some way and our hearts beat faster and the world slowed down and we didn't notice the crowd and we were something and we are nothing and that's life i've been told
+
+But alcohol or no alcohol, sober or stumbling, I yearn for you anyway.
+              </div>
+            </article>
+
+            <article class="poem-pane" id="poem3">
+              <div class="poem-meta">Poem 03</div>
+              <h3>how much longer without your hug</h3>
+              <div class="poem-body">how much longer without your hug</div>
+            </article>
+
+            <article class="poem-pane" id="poem4">
+              <div class="poem-meta">Poem 04</div>
+              <h3>Some moments are written in water</h3>
+              <div class="poem-body">
+They say some days are written in water, temporary, dissolving even as you try to hold them. But this one? This one was maybe carved in the shoreline where sand meets sea
+
+Day started off with shifting meet up time, 9 became 10, 10 became 11, 11 stretched into noon, and we finally left at 1 as if the universe itself was reluctant to let the day begin, knowing how it would have to end. 
+Then had to make a quick stop to get a pack of water and my lovely sweet friend, who is the highlight of this entire day decided not to come along.
+
+The jetty. Waiting. My nerves became taut strings, each minute plucking them tighter. You said I got cranky, I denied it the way we deny all truths that make us human but the truth hovered somewhere between us, unsaid. I no longer want to talk about the process of getting there, I’d move on to the euphoric feeling. 
+If I could, I would build for you a house of mirrors, only so that you could see the reason for my obsession.
+You are pretty, very pretty, sexy and hot (had to include that so you don’t think I hate you) This is the third time meeting since you returned, and each time you are prettier, more yourself.
+We drank, I watched you by the ocean,
+laughing, posing, existing. Me, cataloging every angle of your existence like a cartographer mapping newly discovered land. The cringe, the cute, the completely unselfconscious you, I watched you be yourself and I let myself love you out loud, because silence would have been dishonest.
+The beach, the breeze, the waves crashing into each other, and the highlight of the day, You. Your hugs changed and that’s the simplest way to say it. I just loved how you hugged me, it felt different from every other hugs we’ve had, they lingered, held weight,
+felt like answers to questions I hadn’t asked yet. We walked by the beach when it got dark, just you and I, it was peaceful and quiet, and we had more of those lovely hugs that felt different, I don’t know if you became more comfortable or if I became more honest, but something changed, never really gave it a thought up until now so it doesn’t matter, the hugs felt different and lovely, My body responded the way bodies do when they forget to lie…a hard-on, involuntary, embarrassing, human. You probably felt it. I didn’t care. Some truths announce themselves without permission.
+I stared so much at you, I stared at your lips, curvy, plump, inviting in a way that made me forget language. I wanted to taste them, to know if they held answers to questions I hadn’t learned to ask yet. I almost did. I chickened out, fought the thought a couple times. Then told you I almost did.
+
+“Oh Mira, stop”
+
+Desire rose and retreated, and when I finally chose honesty over fear,I learned how fragile timing can be. Didn’t give it much of a thought at the time but it was something to worry about, Those three words. A red light, a yellow light, a green light, I still don’t know which. it’s a really complicated situation so I do get it but i knew It is easier to give up than to weather the storm, but it is harder to live on knowing it could have been more. 
+I tried to not let so many questions fill up my head. And I tried, I swear I did, but this body was made of sand and everything I do seems to sink right through. My flesh over my being.
+
+It’s 1:11 am, we missed the bonfire but I grabbed two seats anyway, we yapped about perfection and friendship…about regrets and just in between that I totally agree that that girl you mentioned is  demonic and needs help.
+It’s getting late and cold, I’d love to yap all night but it’s time to head back into our little tent that you can almost stand in, I remember you brought a book, The Ex-Girlfriend Murder Club..but we both knew we wouldn’t read it.
+
+It was late, Sleep felt optional and the entire night felt like a dream, I do not need to sleep is what I tell myself cause this is a moment I’d die to relive but we only get this one night so I’d stay up all night and just soak it all in. We held hands, We rolled over and over mimicking the motion of the ocean waves that were crashing outside the tent walls. I ran my fingers through your hair until you put it in my mouth unintentionally, and I didn’t care. I bit you, I licked your face. I had forgotten how to act, so I became someone who only knows how to express love absurdly, completely, without apology.
+A hundred things to fear sleeping at the beach and yet I was scared to blink, terrified I would miss a cute sheepish smile on your face, so I watched you. 
+
+4 AM. You asked if we should step outside the tent, It was hot and you couldn’t sleep. Neither could I, though for different reasons.. Now we’re out listening to the waves, the ancient rhythm that predates us and will outlast us. I can’t help but think how the night is coming to an end, The night was already over. The night would never end.
+
+It’s torturous for two souls that are maybe weaved together by fate but cleaved apart by destiny, an end found in a beginning. 
+ 
+This was a night right out of a romance movie, no clear ending, neither perfectly happy nor devastatingly sad. Just real, Just temporary. The kind were everything is perfect and dreamy but you never understand why it ended a certain way.
+It’s a night we’d never relive and tomorrow i will take a new breath with an empty chest, carrying a memory my chest would echo around, But tonight….tonight I was full.
+
+And for everytime you asked me to be mean to you, I loved you harder 
+I do not know how to ration my heart, I might have given you more than you bargained for or more than you wanted but I promise you, too much is still better than not having me at all 
+
+Everything you know and I do know that isn’t written in here is something I can’t put in words but a memory I’d hold on to. I have turned you into poetry so that the memories of our love may live on beyond our flesh, beyond the shore where we stood, beyond the tent where we could barely sleep in, beyond the morning that came too soon.
+
+Some moments are written in water.
+
+This one, I wrote in stone.
+              </div>
+            </article>
+
+            <article class="poem-pane" id="poem5">
+              <div class="poem-meta">Poem 05</div>
+              <h3>With the infinity of our mortality</h3>
+              <div class="poem-body">
+With the infinity of our mortality, I am still struck every time I see you,
+as if beauty keeps relearning my name through your face.
+
+I ask the same impossible questions
+each time your presence folds into the room
+where does your skin end and where does forever begin.
+
+You cannot answer them, You were never meant to.
+You are mortal too, and maybe that is what makes you unbearable in the best way.
+
+Because time forgets itself in the haven of your warm embrace.
+Minutes loosen their grip, Hours kneel.
+
+So when I look at you,I am not searching for eternity anymore
+I am stunned by the way it visits me anyway.
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <footer class="footer">
+      Made for pookie.
+    </footer>
+  </main>
+
+  <script>
+    const tabs = document.querySelectorAll('.poem-tab');
+    const panes = document.querySelectorAll('.poem-pane');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.poem;
+
+        tabs.forEach(item => item.classList.remove('active'));
+        panes.forEach(pane => pane.classList.remove('active'));
+
+        tab.classList.add('active');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
